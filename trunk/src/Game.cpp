@@ -8,7 +8,7 @@
 #include "Craft.h"
 #include "EnemyCreator.h"
 #include "Background.h"
-#include "Timer.h"
+#include "FPS_Regulator.h"
 
 SDL_Surface* screen;
 SDL_Event event;
@@ -37,13 +37,13 @@ int main( int argc, char* args[] ){
 	Craft user(200,100);
 	EnemyManager enemies(20,1000);
 	Background bG(true);
-	Timer fps;
+	FPS_Regulator fps(60);
 
 	while(gameRunning){
 
 		enemies.addEnemy();
 
-
+		fps.getTimer().start();
 		SDL_FillRect( screen, NULL, 0 );
 		bG.draw(screen);
 		user.draw(screen);
@@ -53,7 +53,6 @@ int main( int argc, char* args[] ){
 		enemies.draw(screen);
 
 		SDL_Flip(screen);
-		fps.start();
 
 		while( SDL_PollEvent( &event ) ) {
 
